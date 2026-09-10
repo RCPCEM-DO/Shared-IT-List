@@ -20,8 +20,9 @@ st.markdown("""
 # --- AUTHENTICATION GATEWAY ---
 # ==========================================
 try:
-    credentials = dict(st.secrets["auth"]["credentials"])
-    cookie = st.secrets["auth"]["cookie"]
+    # Convert st.secrets to a standard dict so the authenticator can mutate tracking values safely
+    credentials = dict(st.secrets["auth"]["credentials"].to_dict())
+    cookie = dict(st.secrets["auth"]["cookie"].to_dict())
 
     authenticator = stauth.Authenticate(
         credentials,
